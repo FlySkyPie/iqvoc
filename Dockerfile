@@ -1,4 +1,4 @@
-FROM ruby:2.6
+FROM docker.io/library/ruby:3.4
 
 ENV RAILS_ENV="production" \
     RAILS_LOG_TO_STDOUT="true" \
@@ -9,10 +9,8 @@ ENV RAILS_ENV="production" \
     PATH="/app/bin:${PATH}" \
     PORT=3000
 
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
-
 RUN apt-get update -qq && \
-    apt-get install -y --no-install-recommends nodejs && \
+    apt-get install -y --no-install-recommends nodejs npm libpq-dev && \
     apt-get autoremove && \
     apt-get clean &&  \
     rm -rf /var/lib/apt/lists/* && \
@@ -31,7 +29,6 @@ COPY --chown=iqvoc:iqvoc package-lock.json ./
 # install bundler/rubygems/npm deps
 RUN gem install bundler
 RUN bundle install
-RUN npm install -g npm@latest
 RUN npm install
 
 # copy app files

@@ -1,7 +1,7 @@
 version: '3'
 services:
   db:
-    image: postgres:14
+    image: docker.io/library/postgres:14
     restart: always
     volumes:
       - /var/lib/postgresql/data
@@ -10,8 +10,8 @@ services:
       POSTGRES_USER: iqvoc
       POSTGRES_PASSWORD: iqvoc
   web:
-#    build: .
-    image: innoq/iqvoc_postgresql
+    build: .
+    image: localhost/iqvoc_postgresql
     ports:
       - "3000:3000"
     volumes:
